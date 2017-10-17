@@ -1,4 +1,4 @@
-# Flex_and_Bison - GWU CSCI 3313 Fall 2017
+# Flex and Bison - GWU CSCI 3313 Fall 2017
 **Project assignments for compiler project by Professor Choi**
 
 _Week 1 Assignment : Advanced Calculator Lexer_
