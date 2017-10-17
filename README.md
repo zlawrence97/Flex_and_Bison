@@ -1,7 +1,7 @@
 # Flex_and_Bison - GWU CSCI 3313 Fall 2017
 **Project assignments for compiler project by Professor Choi**
 
-_Week 1 Assignment_
+_Week 1 Assignment : Advanced Calculator Lexer _
 
 Refer to page 68 of [Flex & Bison] (http://web.iitd.ac.in/~sumeet/flex__bison.pdf) to fill in the missing lines of code
 provided by the syllabus in `project1.l` . Compile the completed with `flex project1.l` which will create a `lex.yy.c` file.
