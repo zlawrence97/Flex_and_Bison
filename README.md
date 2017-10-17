@@ -7,4 +7,5 @@ Refer to page 68 of [Flex & Bison] (http://web.iitd.ac.in/~sumeet/flex__bison.pd
 provided by the syllabus in `project1.l` . Compile the completed with `flex project1.l` which will create a `lex.yy.c` file.
 Submit the finised `project1.l` file.
 
-**Updates for weekly submissions will follow**
+
+_**Updates for weekly submissions will follow**_
