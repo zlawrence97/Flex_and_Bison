@@ -16,14 +16,14 @@
 
 %token <d> NUMBER
 %token <s> ID
-%token <p> PROGRAM
-%token <v> VAR
-%token <a> ARRAY
+%token <program> PROGRAM
+%token <var> VAR
+%token <array> ARRAY
 %token <of> OF
 %token <i> INTEGER
-%token <r> REAL
-%token <b> BGN
-%token <e> END
+%token <real> REAL
+%token <begin> BGN
+%token <end> END
 %token <f> IF
 %token <t> THEN
 %token <e> ELSE
@@ -40,6 +40,7 @@
 %left '*' '/'
 %nonassoc '|' UMINUS
 
+%type <p> program
 %type <a> decl_list
 %type <d> decl
 %type <st> stmt_list
@@ -50,6 +51,7 @@
 
 
 %start program
+
 %%
 
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'
@@ -68,7 +70,7 @@ decl: VAR id_list ':' STD_TYPE	{ }
 stmt: IF exp THEN '{' stmt_list '}'		{ }
 	| IF exp THEN '{' stmt_list '}' ELSE '{' stmt_list '}'	{ }
 	| WHILE exp DO '{' stmt_list '}'	{ }
-	| exp
+	| stmt
 	;
 
 stmt_list: stmt		{  printf("new statement.\n"); }
