@@ -1,4 +1,5 @@
 %{
+int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include "project4.h"
@@ -16,21 +17,21 @@
 
 %token <d> NUMBER
 %token <s> ID
-%token <prog> PROGRAM
-%token <var> VAR
-%token <array> ARRAY
-%token <of> OF
-%token <i> INTEGER
-%token <real> REAL
-%token <begin> BGN
-%token <end> END
-%token <f> IF
-%token <t> THEN
-%token <e> ELSE
-%token <w> WHILE
-%token <dd> DO
-%token <dt> DOTS
-%token <pr> PRINT
+%token <s> PROGRAM
+%token <type_c> VAR
+%token <s> ARRAY
+%token <s> OF
+%token <fn> INTEGER
+%token <s> REAL
+%token <s> BGN
+%token <s> END
+%token <s> IF
+%token <s> THEN
+%token <s> ELSE
+%token <s> WHILE
+%token <s> DO
+%token <s> DOTS
+%token <printcall> PRINT
 %token <type_c> STD_TYPE
 
 
@@ -40,17 +41,17 @@
 %left '*' '/'
 %nonassoc '|' UMINUS
 
-%type <p> program
-%type <a> decl_list
-%type <d> decl
-%type <st> stmt_list
-%type <s> stmt
-%type <e> exp
+%type <sl> program
+%type <sl> decl_list
+%type <sl> decl
+%type <sl> stmt_list
+%type <sl> stmt
+%type <sl> exp
 %type <sl> id_list
 %type <nl> num_list
 
 
-%start stmt
+%start program
 
 %%
  
