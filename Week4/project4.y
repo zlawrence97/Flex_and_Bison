@@ -41,12 +41,12 @@ int yylex(void);
 %left '*' '/'
 %nonassoc '|' UMINUS
 
-%type <sl> program
+%type <s> program
 %type <sl> decl_list
-%type <sl> decl
+%type <s> decl
 %type <sl> stmt_list
-%type <sl> stmt
-%type <sl> exp
+%type <s> stmt
+%type <s> exp
 %type <sl> id_list
 %type <nl> num_list
 
