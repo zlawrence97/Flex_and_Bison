@@ -16,7 +16,7 @@
 
 %token <d> NUMBER
 %token <s> ID
-%token <program> PROGRAM
+%token <prog> PROGRAM
 %token <var> VAR
 %token <array> ARRAY
 %token <of> OF
@@ -50,10 +50,10 @@
 %type <nl> num_list
 
 
-%start program
+%start stmt
 
 %%
-
+ 
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'
 	{ printf("new program.\n"); }
 	;

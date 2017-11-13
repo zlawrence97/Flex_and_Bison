@@ -556,8 +556,8 @@ char *yytext;
 #line 1 "project4.l"
 /* recognize tokens for the calculator */
 #line 5 "project4.l"
-#include "project1.h"
-#include "project1.tab.h"
+#include "project4.h"
+#include "project4.tab.h"
 #line 562 "lex.yy.c"
 
 #define INITIAL 0
