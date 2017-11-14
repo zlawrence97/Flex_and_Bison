@@ -1,5 +1,4 @@
 %{
-int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include "project4.h"
@@ -17,23 +16,8 @@ int yylex(void);
 
 %token <d> NUMBER
 %token <s> ID
-%token <s> PROGRAM
-%token <type_c> VAR
-%token <s> ARRAY
-%token <s> OF
-%token <fn> INTEGER
-%token <s> REAL
-%token <s> BGN
-%token <s> END
-%token <s> IF
-%token <s> THEN
-%token <s> ELSE
-%token <s> WHILE
-%token <s> DO
-%token <s> DOTS
-%token <printcall> PRINT
+%token PROGRAM VAR ARRAY OF INTEGER REAL BGN END IF THEN ELSE WHILE DO DOTS PRINT
 %token <type_c> STD_TYPE
-
 
 %nonassoc <fn> CMP
 %right '='
@@ -41,20 +25,13 @@ int yylex(void);
 %left '*' '/'
 %nonassoc '|' UMINUS
 
-%type <s> program
-%type <sl> decl_list
-%type <s> decl
-%type <sl> stmt_list
-%type <s> stmt
-%type <s> exp
+%type <a> decl_list decl stmt_list stmt exp
 %type <sl> id_list
 %type <nl> num_list
 
-
 %start program
-
 %%
- 
+
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'
 	{ printf("new program.\n"); }
 	;
@@ -71,7 +48,7 @@ decl: VAR id_list ':' STD_TYPE	{ }
 stmt: IF exp THEN '{' stmt_list '}'		{ }
 	| IF exp THEN '{' stmt_list '}' ELSE '{' stmt_list '}'	{ }
 	| WHILE exp DO '{' stmt_list '}'	{ }
-	| stmt
+	| exp
 	;
 
 stmt_list: stmt		{  printf("new statement.\n"); }
