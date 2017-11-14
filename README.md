@@ -4,8 +4,11 @@ _Be sure to change the file names to correspond to the current week._
 
 
 Bison: .y compiled: tab.c and tab.h
+
 Flex: .l compiled: lex.yy.c
+
 C: .c compiled: .o
+
 Header: .h
 
 
