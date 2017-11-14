@@ -32,10 +32,13 @@ _Week 4 Assignment : _
 
 Use project1.l, the Header file from the template files, project2.y, and the sort.txt developed during week 3.
 Add the functions `static unsigned synhash(char *sym)` and `struct symbol * lookup(char *sym)` to your `project4.c` file. Compile using the following commands:
-$`flex project4.l`
-$`bison -d project4.y`
-$`gcc -o project4 project4.c project4.tab.c lex.yy.c`
-$`./project4 sort.txt` _parses text file_
+
+```
+$flex project4.l
+$bison -d project4.y
+$gcc -o project4 project4.c project4.tab.c lex.yy.c
+$./project4 sort.txt
+```
 
 **Submit**: project4.l, lex.yy.c, project4.y, project4.tab.c and project4.tab.h, project4.h, sort.txt and project4.c
 
