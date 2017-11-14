@@ -1,26 +1,22 @@
-/* recognize tokens for the calculator */
-
 %option noyywrap nodefault yylineno
 %{
 #include "project4.h"
 #include "project4.tab.h"
 %}
 
-
 EXP ([Ex][-+]?[0-9]+)
 
 %%
 
 
-
 ".."	{ return DOTS; }
 
 "+"	|
-"-"     |
-"*"     |
-"/"     |
-"="     |
-"|"     |
+"-"	|
+"*"	|
+"/"	|
+"="	|
+"|"	|
 ","	|
 ";"	|
 ":"	|
@@ -34,10 +30,10 @@ EXP ([Ex][-+]?[0-9]+)
 
 
 ">"	{ yylval.fn = 1; return CMP; }
-"<"     { yylval.fn = 2; return CMP; }
-"<>"    { yylval.fn = 3; return CMP; }
-"=="    { yylval.fn = 4; return CMP; }
-">="    { yylval.fn = 5; return CMP; }
+"<"	{ yylval.fn = 2; return CMP; }
+"<>"	{ yylval.fn = 3; return CMP; }
+"=="	{ yylval.fn = 4; return CMP; }
+">="	{ yylval.fn = 5; return CMP; }
 "<="	{ yylval.fn = 6; return CMP; }
 
 "integer"	{ yylval.type_c = 'a'; return STD_TYPE; }
@@ -53,9 +49,9 @@ EXP ([Ex][-+]?[0-9]+)
 
 
 "if"	{ return IF; }
-"then"  { return THEN; }
-"else"  { return ELSE; }
-"while" { return WHILE; }
+"then"	{ return THEN; }
+"else"	{ return ELSE; }
+"while"	{ return WHILE; }
 "do"	{ return DO; }
 
 "print"	{ return PRINT; }
@@ -71,3 +67,4 @@ EXP ([Ex][-+]?[0-9]+)
 [ \t\n]
 .	{ yyerror("Mystery character.\n"); }
 %%
+
