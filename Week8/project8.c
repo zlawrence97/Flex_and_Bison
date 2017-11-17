@@ -103,6 +103,35 @@ struct ast * newref(struct symbol *s)
 	return (struct ast *)a;
 }
 
+struct ast * newrefarr(struct symbol *s, struct ast *index)
+{
+	struct symrefarr *a = malloc(sizeof(struct symrefarr));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'U';
+	a->s = s;
+	a->index = index;
+	return (struct ast *)a;
+}
+
+struct ast * newasgnarr(struct symbol *s, struct ast *index, struct ast *v)
+{
+	struct symasgnarr *a = malloc(sizeof(struct symasgnarr));
+	
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'V';
+	a->s = s;
+	a->index = index;
+	a->v = v;
+	return (struct ast *)a;
+}	
+
 struct ast * newasgn(struct symbol *s, struct ast *v)
 {
 	struct symasgn *a = malloc(sizeof(struct symasgn));
