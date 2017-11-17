@@ -50,10 +50,9 @@
 %type <nl> num_list
 
 
-%start stmt
-
+%start program
 %%
- 
+
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'
 	{ eval($7); eval($9); treefree($9); treefree($7); printf("parse done.\n"); }
 	;
@@ -72,32 +71,32 @@ stmt: IF exp THEN '{' stmt_list '}'				{ }
 	| exp
 	;
 
-stmt_list: stmt				{ $$ = $1; }
-	| stmt_list ';' stmt 		{ $$ = newast('L', $1, $3); }
+stmt_list: stmt					{ $$ = $1; }
+	| stmt_list ';' stmt 			{ $$ = newast('L', $1, $3); }
 	;
 
-exp: exp CMP exp				{ }
-	| exp '+' exp			{ $$ = newast('+', $1, $3);   }
-	| exp '-' exp			{ $$ = newast('-', $1, $3);   }
-	| exp '*' exp			{ $$ = newast('*', $1, $3);   }
-	| exp '/' exp 			{ $$ = newast('/', $1, $3);   }
-	| '|' exp			{ $$ = newast('|', $2, NULL); }
-	| '(' exp ')'			{ $$ = $2;}
-	| '-' exp %prec UMINUS		{ $$ = newast('M', $2, NULL); }
-	| NUMBER				{ $$ = newnum($1); }
-	| ID				{ $$ = newref($1); }
-	| ID '[' exp ']'			{ }
-	| ID '[' exp ']' '=' exp		{ }
-	| ID '=' exp			{ }
-	| ID '=' '{' num_list '}'	{ }
-	| PRINT '(' exp ')'		{ $$ = newprint($3); }
+exp: exp CMP exp					{ $$ = newcmp($2, $1, $3);    }
+	| exp '+' exp				{ $$ = newast('+', $1, $3);   }
+	| exp '-' exp				{ $$ = newast('-', $1, $3);   }
+	| exp '*' exp				{ $$ = newast('*', $1, $3);   }
+	| exp '/' exp 				{ $$ = newast('/', $1, $3);   }
+	| '|' exp				{ $$ = newast('|', $2, NULL); }
+	| '(' exp ')'				{ $$ = $2;}
+	| '-' exp %prec UMINUS			{ $$ = newast('M', $2, NULL); }
+	| NUMBER					{ $$ = newnum($1); }
+	| ID					{ $$ = newref($1); }
+	| ID '[' exp ']'				{ }
+	| ID '[' exp ']' '=' exp			{ }
+	| ID '=' exp				{ $$ = newasgn($1, $3); }
+	| ID '=' '{' num_list '}'		{ }
+	| PRINT '(' exp ')'			{ $$ = newprint($3); }
 	;
 
-num_list: NUMBER				{ }
-	| NUMBER ',' num_list		{ }
+num_list: NUMBER					{ }
+	| NUMBER ',' num_list			{ }
 	;
 
-id_list: ID				{ $$ = newsymlist($1, NULL); }
-	| ID ',' id_list			{ $$ = newsymlist($1, $3); }
+id_list: ID					{ $$ = newsymlist($1, NULL); }
+	| ID ',' id_list				{ $$ = newsymlist($1, $3); }
 	;
 %%
