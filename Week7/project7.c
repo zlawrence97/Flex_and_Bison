@@ -221,6 +221,19 @@ struct symlist * newsymlist(struct symbol *sym, struct symlist *next)
 	return sl;
 }
 
+struct numlist * newnumlist(double num, struct numlist *next)
+{
+	struct numlist *nl = malloc(sizeof(struct numlist));
+
+	if(!nl) {
+		yyerror("out of space");
+		exit(0);
+	}
+	nl->n = num;
+	nl->next = next;
+	return nl;
+}
+
 static double callprint(struct printcall *);
 static double calldecl(struct decl *);
 static double calldeclarr(struct declarr *);
