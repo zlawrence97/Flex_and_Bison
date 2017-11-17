@@ -2,8 +2,8 @@
 
 %option noyywrap nodefault yylineno
 %{
-#include "project7.h"
-#include "project7.tab.h"
+#include "project9.h"
+#include "project9.tab.h"
 %}
 
 
