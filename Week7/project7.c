@@ -117,6 +117,20 @@ struct ast * newasgn(struct symbol *s, struct ast *v)
 	return (struct ast *)a;
 }
 
+struct ast * newinitarr(struct symbol *s, struct numlist *nl)
+{
+	struct syminitarr *a = malloc(sizeof(struct syminitarr));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'T';
+	a->s = s;
+	a->nl = nl;
+	return (struct ast *)a;
+}
+
 struct ast * newdecl(struct symlist *sl, char type)
 {
 	struct decl *a = malloc(sizeof(struct decl));
