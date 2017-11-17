@@ -62,7 +62,21 @@ struct ast * newnum(double d)
 	a->number = d;
 	return (struct ast *)a;
 }
- 
+
+struct ast * newcmp(int cmptype, struct ast *l, struct ast *r)
+{
+	struct ast *a = malloc(sizeof(struct ast));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = '0' + cmptype;
+	a->l = l;
+	a->r = r;
+	return a;
+}
+
 struct ast * newprint(struct ast *l)
 {
 	struct printcall *a = malloc(sizeof(struct printcall));
