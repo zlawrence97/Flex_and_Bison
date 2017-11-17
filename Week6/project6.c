@@ -102,7 +102,21 @@ struct ast * newref(struct symbol *s)
 	a->s = s;
 	return (struct ast *)a;
 }
- 
+
+struct ast * newasgn(struct symbol *s, struct ast *v)
+{
+	struct symasgn *a = malloc(sizeof(struct symasgn));
+	
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = '=';
+	a->s = s;
+	a->v = v;
+	return (struct ast *)a;
+}
+
 struct ast * newdecl(struct symlist *sl, char type)
 {
 	struct decl *a = malloc(sizeof(struct decl));
