@@ -206,6 +206,13 @@ struct symlist * newsymlist(struct symbol *sym, struct symlist *next)
 	sl->next = next;
 	return sl;
 }
+
+static double callprint(struct printcall *);
+static double calldecl(struct decl *);
+static double calldeclarr(struct declarr *);
+static double callrefarr(struct symrefarr *);
+static double callasgnarr(struct symasgnarr *);
+static double callinitarr(struct syminitarr *);
   
 double eval(struct ast *a)
 {
