@@ -50,8 +50,7 @@
 %type <nl> num_list
 
 
-%start stmt
-
+%start program
 %%
  
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'
