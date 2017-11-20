@@ -2,7 +2,7 @@
 int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
-#include "project5.h"
+#include "project6.h"
 %}
 
 %union {
