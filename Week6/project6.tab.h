@@ -73,7 +73,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 7 "project6.y" /* yacc.c:1909  */
+#line 8 "project6.y" /* yacc.c:1909  */
 
 	struct ast *a;
 	double d;
