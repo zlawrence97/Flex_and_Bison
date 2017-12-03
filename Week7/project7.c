@@ -379,7 +379,7 @@ static double callprint(struct printcall *f)
 	if((f->l)->nodetype == 'N') {
 		printf("%s", (((struct symref *)(f->l))->s)->name);
 	}
-	if((f->l)->nodetype == 'N' && (((struct symref *)(f->Ul))->s)->arr_len > 0) {
+	if((f->l)->nodetype == 'N' && (((struct symref *)(f->l))->s)->arr_len > 0) {
 		printf(" = {");
 		for(i = 0; i < (((struct symref *)(f->l))->s)->arr_len - 1; i++) {
 			printf("%4.4g, ", *((((struct symref *)(f->l))->s)->arr_head + i));
