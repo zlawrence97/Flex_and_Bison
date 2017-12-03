@@ -99,3 +99,4 @@ id_list: ID				{ $$ = newsymlist($1, NULL); }
 	| ID ',' id_list			{ $$ = newsymlist($1, $3); }
 	;
 %%
+
