@@ -130,7 +130,7 @@ struct ast * newasgnarr(struct symbol *s, struct ast *index, struct ast *v)
 	a->index = index;
 	a->v = v;
 	return (struct ast *)a;
-}	
+}
 
 struct ast * newasgn(struct symbol *s, struct ast *v)
 {
@@ -143,6 +143,20 @@ struct ast * newasgn(struct symbol *s, struct ast *v)
 	a->nodetype = '=';
 	a->s = s;
 	a->v = v;
+	return (struct ast *)a;
+}
+
+struct ast * newinitarr(struct symbol *s, struct numlist *nl)
+{
+	struct syminitarr *a = malloc(sizeof(struct syminitarr));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'T';
+	a->s = s;
+	a->nl = nl;
 	return (struct ast *)a;
 }
 
@@ -236,12 +250,25 @@ struct symlist * newsymlist(struct symbol *sym, struct symlist *next)
 	return sl;
 }
 
+struct numlist * newnumlist(double num, struct numlist *next)
+{
+	struct numlist *nl = malloc(sizeof(struct numlist));
+
+	if(!nl) {
+		yyerror("out of space");
+		exit(0);
+	}
+	nl->n = num;
+	nl->next = next;
+	return nl;
+}
+
 static double callprint(struct printcall *);
 static double calldecl(struct decl *);
 static double calldeclarr(struct declarr *);
 static double callrefarr(struct symrefarr *);
 static double callasgnarr(struct symasgnarr *);
-static double arr(struct syminitarr *);
+static double callinitarr(struct syminitarr *);
   
 double eval(struct ast *a)
 {
@@ -303,7 +330,7 @@ double eval(struct ast *a)
 		break;
  
 	case 'L': eval(a->l); v = eval(a->r); break;
-			
+
 	case 'U': if((((struct symrefarr *)a)->s)->type != 'a' && (((struct symrefarr *)a)->s)->type != 'b')
 		{ printf("using undeclared ID: %s\n", (((struct symrefarr *)a)->s)->name); }
 		v = callrefarr((struct symrefarr *)a); break;
