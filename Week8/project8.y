@@ -39,7 +39,7 @@ int yylex(void);
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'	{ eval($7); eval($9); treefree($9); treefree($7); printf("parse done.\n"); }
 	;
 
-decl_list:			{ /*$$ = NULL;*/ }
+decl_list:			{ $$ = NULL; }
 	| decl ';' decl_list	{if($3 == NULL) $$ = $1; else $$ = newast('L', $1, $3); }
 	;
 
