@@ -193,7 +193,22 @@ struct ast * newdeclarr(struct symlist *sl, int begin, int end, char type)
 	a->type = type;
 	return (struct ast *)a;
 }
- 
+
+struct ast * newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *el)
+{
+	struct flow *a = malloc(sizeof(struct flow));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = nodetype;
+	a->cond = cond;
+	a->tl = tl;
+	a->el = el;
+	return (struct ast *)a;
+}
+
 void treefree(struct ast *a)
 {
 	switch(a->nodetype) {
