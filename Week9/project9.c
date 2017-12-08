@@ -130,7 +130,7 @@ struct ast * newasgnarr(struct symbol *s, struct ast *index, struct ast *v)
 	a->index = index;
 	a->v = v;
 	return (struct ast *)a;
-}	
+}
 
 struct ast * newasgn(struct symbol *s, struct ast *v)
 {
@@ -143,6 +143,20 @@ struct ast * newasgn(struct symbol *s, struct ast *v)
 	a->nodetype = '=';
 	a->s = s;
 	a->v = v;
+	return (struct ast *)a;
+}
+
+struct ast * newinitarr(struct symbol *s, struct numlist *nl)
+{
+	struct syminitarr *a = malloc(sizeof(struct syminitarr));
+
+	if(!a) {
+		yyerror("out of space");
+		exit(0);
+	}
+	a->nodetype = 'T';
+	a->s = s;
+	a->nl = nl;
 	return (struct ast *)a;
 }
 
@@ -179,22 +193,7 @@ struct ast * newdeclarr(struct symlist *sl, int begin, int end, char type)
 	a->type = type;
 	return (struct ast *)a;
 }
-
-struct ast * newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *el)
-{
-	struct flow *a = malloc(sizeof(struct flow));
-
-	if(!a) {
-		yyerror("out of space");
-		exit(0);
-	}
-	a->nodetype = nodetype;
-	a->cond = cond;
-	a->tl = tl;
-	a->el = el;
-	return (struct ast *)a;
-}
-
+ 
 void treefree(struct ast *a)
 {
 	switch(a->nodetype) {
@@ -249,6 +248,19 @@ struct symlist * newsymlist(struct symbol *sym, struct symlist *next)
 	sl->sym = sym;
 	sl->next = next;
 	return sl;
+}
+
+struct numlist * newnumlist(double num, struct numlist *next)
+{
+	struct numlist *nl = malloc(sizeof(struct numlist));
+
+	if(!nl) {
+		yyerror("out of space");
+		exit(0);
+	}
+	nl->n = num;
+	nl->next = next;
+	return nl;
 }
 
 static double callprint(struct printcall *);
@@ -318,12 +330,140 @@ double eval(struct ast *a)
 		break;
  
 	case 'L': eval(a->l); v = eval(a->r); break;
+
+	case 'U': if((((struct symrefarr *)a)->s)->type != 'a' && (((struct symrefarr *)a)->s)->type != 'b')
+		{ printf("using undeclared ID: %s\n", (((struct symrefarr *)a)->s)->name); }
+		v = callrefarr((struct symrefarr *)a); break;
  
+	case 'V': if((((struct symasgnarr *)a)->s)->type != 'a' && (((struct symasgnarr *)a)->s)->type != 'b')
+		{ printf("using undeclared ID: %s\n", (((struct symasgnarr *)a)->s)->name); }
+		v = callasgnarr((struct symasgnarr *)a); break;
+ 
+	case 'T': if((((struct syminitarr *)a)->s)->type != 'a' && (((struct syminitarr *)a)->s)->type != 'b')
+		{ printf("using undeclared ID: %s\n", (((struct syminitarr *)a)->s)->name); }
+		v = callinitarr((struct syminitarr *)a); break;
+
 	default: printf("internal error: bad node %c\n", a->nodetype);
 	}
 	return v;
 }
- 
+
+static double calldecl(struct decl *d)
+{
+	if(d->type == 'a') {
+		while(d->sl) {
+			((d->sl)->sym)->value = 0;
+			((d->sl)->sym)->type = 'a';
+			((d->sl)->sym)->arr_len = 0;
+			((d->sl)->sym)->ini_index = 0;
+			((d->sl)->sym)->arr_head = NULL;
+			//printf("symbol: %s, type: %c\n", ((d->sl)->sym)->name, ((d->sl)->sym)->type);
+			d->sl = (d->sl)->next;
+		}
+	} else if(d->type == 'b') {
+		while(d->sl) {
+			((d->sl)->sym)->value = 0.0;
+			((d->sl)->sym)->type = 'b';
+			((d->sl)->sym)->arr_len = 0;
+			((d->sl)->sym)->ini_index = 0;
+			((d->sl)->sym)->arr_head = NULL;
+			//printf("symbol: %s, type: %c\n", ((d->sl)->sym)->name, ((d->sl)->sym)->type);
+			d->sl = (d->sl)->next;
+		}
+	} else {
+		printf("bad declaration type: %c\n", d->type);
+		return 1;	
+	}
+	return 0;
+}
+
+static double calldeclarr(struct declarr *da)
+{
+	if(da->type == 'a') {
+		while(da->sl) {
+			((da->sl)->sym)->value = -1;
+			((da->sl)->sym)->type = 'a';
+			((da->sl)->sym)->arr_len = da->len;
+			((da->sl)->sym)->ini_index = da->shift;
+			((da->sl)->sym)->arr_head = (double *)malloc(sizeof(double) * da->len);
+			if(!(((da->sl)->sym)->arr_head)) {
+				yyerror("out of space for array");
+				exit(0);
+			}
+			//printf("symbol: %s, type: %c\n", ((da->sl)->sym)->name, ((da->sl)->sym)->type);
+			da->sl = (da->sl)->next;
+		}	
+	} else if(da->type == 'b') {
+		while(da->sl) {
+			((da->sl)->sym)->value = -1.0;
+			((da->sl)->sym)->type = 'b';
+			((da->sl)->sym)->arr_len = da->len;
+			((da->sl)->sym)->ini_index = da->shift;
+			((da->sl)->sym)->arr_head = (double *)malloc(sizeof(double) * da->len);
+			if(!(((da->sl)->sym)->arr_head)) {
+				yyerror("out of space for array");
+				exit(0);
+			}
+			//printf("symbol: %s, type: %c\n", ((da->sl)->sym)->name, ((da->sl)->sym)->type);
+			da->sl = (da->sl)->next;
+		}
+	} else {
+		printf("bad declaration type %c\n", da->type);
+		return 1;
+	}
+	return 0;
+}
+
+static double callprint(struct printcall *f)
+{
+	int i;
+	if((f->l)->nodetype == 'N') {
+		printf("%s", (((struct symref *)(f->l))->s)->name);
+	}
+	if((f->l)->nodetype == 'N' && (((struct symref *)(f->l))->s)->arr_len > 0) {
+		printf(" = {");
+		for(i = 0; i < (((struct symref *)(f->l))->s)->arr_len - 1; i++) {
+			printf("%4.4g, ", *((((struct symref *)(f->l))->s)->arr_head + i));
+		}
+		printf("%4.4g", *((((struct symref *)(f->l))->s)->arr_head + (((struct symref *)(f->l))->s)->arr_len - 1));
+		printf("}\n");
+		return 0;
+	}
+
+	double v = eval(f->l);
+	printf(" = %4.4g\n", v);
+	return v;
+}
+
+static double callrefarr(struct symrefarr *sa)
+{
+	int arr_index = (int)eval(sa->index);
+	if((sa->s)->arr_len == 0) {
+		yyerror("wrong reference");
+		exit(0);
+	}
+	return *(((sa->s)->arr_head) + arr_index - ((sa->s)->ini_index));
+}
+
+static double callasgnarr(struct symasgnarr *aa)
+{
+	int arr_index = (int)eval(aa->index);
+	double d = eval(aa->v);
+	*(((aa->s)->arr_head) + arr_index - ((aa->s)->ini_index)) = d;
+	return d;
+}
+
+static double callinitarr(struct syminitarr *ia)
+{
+	int i;
+	for(i = 0; i < ((ia->s)->arr_len) && (ia->nl) != NULL; i++)
+	{
+		*((ia->s)->arr_head + i) = (ia->nl)->n;
+		ia->nl = (ia->nl)->next;
+	}
+	return 0;
+}
+
 void yyerror(char *s)
 {
 	fprintf(stderr, "error: %s\n", s);
