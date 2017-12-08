@@ -1,4 +1,5 @@
 %{
+int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
 #include "project8.h"
@@ -15,22 +16,8 @@
 }
 
 %token <d> NUMBER
-%token <s> ID
-%token <prog> PROGRAM
-%token <var> VAR
-%token <array> ARRAY
-%token <of> OF
-%token <i> INTEGER
-%token <real> REAL
-%token <begin> BGN
-%token <end> END
-%token <f> IF
-%token <t> THEN
-%token <e> ELSE
-%token <w> WHILE
-%token <dd> DO
-%token <dt> DOTS
-%token <pr> PRINT
+%token <s> ID 
+%token PROGRAM VAR ARRAY OF INTEGER REAL BGN END IF THEN ELSE WHILE DO DOTS PRINT
 %token <type_c> STD_TYPE
 
 
@@ -41,11 +28,7 @@
 %nonassoc '|' UMINUS
 
 %type <p> program
-%type <a> decl_list
-%type <d> decl
-%type <st> stmt_list
-%type <s> stmt
-%type <e> exp
+%type <a> decl_list decl stmt_list stmt exp
 %type <sl> id_list
 %type <nl> num_list
 
