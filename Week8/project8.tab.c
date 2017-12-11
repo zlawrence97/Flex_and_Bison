@@ -1297,7 +1297,7 @@ yyreduce:
 
   case 3:
 #line 42 "project8.y" /* yacc.c:1646  */
-    { /*$$ = NULL;*/ }
+    { (yyval.a) = NULL; }
 #line 1302 "project8.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1411,13 +1411,13 @@ yyreduce:
 
   case 23:
 #line 70 "project8.y" /* yacc.c:1646  */
-    { }
+    { (yyval.a) = newrefarr((yyvsp[-3].s), (yyvsp[-1].a)); }
 #line 1416 "project8.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 71 "project8.y" /* yacc.c:1646  */
-    { }
+    { (yyval.a) = newasgnarr((yyvsp[-5].s), (yyvsp[-3].a), (yyvsp[0].a)); }
 #line 1422 "project8.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1429,7 +1429,7 @@ yyreduce:
 
   case 26:
 #line 73 "project8.y" /* yacc.c:1646  */
-    { newinitarr((yyvsp[-4].s), (yyvsp[-1].nl)); }
+    { (yyval.a) = newinitarr((yyvsp[-4].s), (yyvsp[-1].nl)); }
 #line 1434 "project8.tab.c" /* yacc.c:1646  */
     break;
 
