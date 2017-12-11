@@ -34,6 +34,7 @@ int yylex(void);
 
 
 %start program
+
 %%
 
 program: PROGRAM ID '(' id_list ')' ';' decl_list BGN stmt_list END '.'	{ eval($7); eval($9); treefree($9); treefree($7); printf("parse done.\n"); }
