@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "project8.h"
+#include "project9.h"
 
 int yyparse(void);
 
@@ -193,7 +193,7 @@ struct ast * newdeclarr(struct symlist *sl, int begin, int end, char type)
 	a->type = type;
 	return (struct ast *)a;
 }
- 
+
 void treefree(struct ast *a)
 {
 	switch(a->nodetype) {
