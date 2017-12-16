@@ -67,10 +67,9 @@
 int yylex(void);
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "project9.h"
 
-#line 74 "project9.tab.c" /* yacc.c:339  */
+#line 73 "project9.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -133,17 +132,17 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 9 "project9.y" /* yacc.c:355  */
+#line 8 "project9.y" /* yacc.c:355  */
 
-	struct ast *a;
-	double d;
-	struct symbol *s;
-	struct symlist *sl;
-	struct numlist *nl;
-	int fn;
-	char type_c;
+  struct ast *a;
+  double d;
+  struct symbol *s;
+  struct symlist *sl;
+  struct numlist *nl;
+  int fn;
+  char type_c;
 
-#line 147 "project9.tab.c" /* yacc.c:355  */
+#line 146 "project9.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -160,7 +159,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 164 "project9.tab.c" /* yacc.c:358  */
+#line 163 "project9.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -459,10 +458,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    41,    41,    44,    45,    48,    49,    52,    53,    54,
-      55,    58,    59,    62,    63,    64,    65,    66,    67,    68,
-      69,    70,    71,    72,    73,    74,    75,    76,    79,    80,
-      83,    84
+       0,    37,    37,    40,    41,    44,    45,    48,    49,    50,
+      51,    54,    55,    58,    59,    60,    61,    62,    63,    64,
+      65,    66,    67,    68,    69,    70,    71,    72,    75,    76,
+      79,    80
 };
 #endif
 
@@ -1291,181 +1290,181 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 41 "project9.y" /* yacc.c:1646  */
+#line 37 "project9.y" /* yacc.c:1646  */
     { eval((yyvsp[-4].a)); eval((yyvsp[-2].a)); treefree((yyvsp[-2].a)); treefree((yyvsp[-4].a)); printf("parse done.\n"); }
-#line 1297 "project9.tab.c" /* yacc.c:1646  */
+#line 1296 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 44 "project9.y" /* yacc.c:1646  */
-    {/* $$ = NULL; */}
-#line 1303 "project9.tab.c" /* yacc.c:1646  */
+#line 40 "project9.y" /* yacc.c:1646  */
+    { (yyval.a) = NULL; }
+#line 1302 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 45 "project9.y" /* yacc.c:1646  */
+#line 41 "project9.y" /* yacc.c:1646  */
     { if((yyvsp[0].a) == NULL) (yyval.a) = (yyvsp[-2].a); else (yyval.a) = newast('L', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1309 "project9.tab.c" /* yacc.c:1646  */
+#line 1308 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 48 "project9.y" /* yacc.c:1646  */
+#line 44 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newdecl((yyvsp[-2].sl), (yyvsp[0].type_c)); }
-#line 1315 "project9.tab.c" /* yacc.c:1646  */
+#line 1314 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 49 "project9.y" /* yacc.c:1646  */
+#line 45 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newdeclarr((yyvsp[-9].sl), (yyvsp[-5].d), (yyvsp[-3].d), (yyvsp[0].type_c)); }
-#line 1321 "project9.tab.c" /* yacc.c:1646  */
+#line 1320 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 52 "project9.y" /* yacc.c:1646  */
+#line 48 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newflow('I', (yyvsp[-4].a), (yyvsp[-1].a), NULL); }
-#line 1327 "project9.tab.c" /* yacc.c:1646  */
+#line 1326 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 53 "project9.y" /* yacc.c:1646  */
+#line 49 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newflow('I', (yyvsp[-8].a), (yyvsp[-5].a), (yyvsp[-1].a)); }
-#line 1333 "project9.tab.c" /* yacc.c:1646  */
+#line 1332 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 54 "project9.y" /* yacc.c:1646  */
+#line 50 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newflow('W', (yyvsp[-4].a), (yyvsp[-1].a), NULL); }
-#line 1339 "project9.tab.c" /* yacc.c:1646  */
+#line 1338 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 58 "project9.y" /* yacc.c:1646  */
+#line 54 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[0].a); }
-#line 1345 "project9.tab.c" /* yacc.c:1646  */
+#line 1344 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 59 "project9.y" /* yacc.c:1646  */
+#line 55 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('L', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1351 "project9.tab.c" /* yacc.c:1646  */
+#line 1350 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 62 "project9.y" /* yacc.c:1646  */
+#line 58 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newcmp((yyvsp[-1].fn), (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1357 "project9.tab.c" /* yacc.c:1646  */
+#line 1356 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 63 "project9.y" /* yacc.c:1646  */
+#line 59 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('+', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1363 "project9.tab.c" /* yacc.c:1646  */
+#line 1362 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 64 "project9.y" /* yacc.c:1646  */
+#line 60 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('-', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1369 "project9.tab.c" /* yacc.c:1646  */
+#line 1368 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 65 "project9.y" /* yacc.c:1646  */
+#line 61 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('*', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1375 "project9.tab.c" /* yacc.c:1646  */
+#line 1374 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 66 "project9.y" /* yacc.c:1646  */
+#line 62 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('/', (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1381 "project9.tab.c" /* yacc.c:1646  */
+#line 1380 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 67 "project9.y" /* yacc.c:1646  */
+#line 63 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('|', (yyvsp[0].a), NULL); }
-#line 1387 "project9.tab.c" /* yacc.c:1646  */
+#line 1386 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 68 "project9.y" /* yacc.c:1646  */
+#line 64 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[-1].a); }
-#line 1393 "project9.tab.c" /* yacc.c:1646  */
+#line 1392 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 69 "project9.y" /* yacc.c:1646  */
+#line 65 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newast('M', (yyvsp[0].a), NULL); }
-#line 1399 "project9.tab.c" /* yacc.c:1646  */
+#line 1398 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 70 "project9.y" /* yacc.c:1646  */
+#line 66 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newnum((yyvsp[0].d)); }
-#line 1405 "project9.tab.c" /* yacc.c:1646  */
+#line 1404 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 71 "project9.y" /* yacc.c:1646  */
+#line 67 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newref((yyvsp[0].s)); }
-#line 1411 "project9.tab.c" /* yacc.c:1646  */
+#line 1410 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 72 "project9.y" /* yacc.c:1646  */
+#line 68 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newrefarr((yyvsp[-3].s), (yyvsp[-1].a)); }
-#line 1417 "project9.tab.c" /* yacc.c:1646  */
+#line 1416 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 73 "project9.y" /* yacc.c:1646  */
+#line 69 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newasgnarr((yyvsp[-5].s), (yyvsp[-3].a), (yyvsp[0].a)); }
-#line 1423 "project9.tab.c" /* yacc.c:1646  */
+#line 1422 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 74 "project9.y" /* yacc.c:1646  */
+#line 70 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newasgn((yyvsp[-2].s), (yyvsp[0].a)); }
-#line 1429 "project9.tab.c" /* yacc.c:1646  */
+#line 1428 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 75 "project9.y" /* yacc.c:1646  */
+#line 71 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newinitarr((yyvsp[-4].s), (yyvsp[-1].nl)); }
-#line 1435 "project9.tab.c" /* yacc.c:1646  */
+#line 1434 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 76 "project9.y" /* yacc.c:1646  */
+#line 72 "project9.y" /* yacc.c:1646  */
     { (yyval.a) = newprint((yyvsp[-1].a)); }
-#line 1441 "project9.tab.c" /* yacc.c:1646  */
+#line 1440 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 79 "project9.y" /* yacc.c:1646  */
+#line 75 "project9.y" /* yacc.c:1646  */
     { (yyval.nl) = newnumlist((yyvsp[0].d), NULL); }
-#line 1447 "project9.tab.c" /* yacc.c:1646  */
+#line 1446 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 80 "project9.y" /* yacc.c:1646  */
+#line 76 "project9.y" /* yacc.c:1646  */
     { (yyval.nl) = newnumlist((yyvsp[-2].d), (yyvsp[0].nl)); }
-#line 1453 "project9.tab.c" /* yacc.c:1646  */
+#line 1452 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 83 "project9.y" /* yacc.c:1646  */
+#line 79 "project9.y" /* yacc.c:1646  */
     { (yyval.sl) = newsymlist((yyvsp[0].s), NULL); }
-#line 1459 "project9.tab.c" /* yacc.c:1646  */
+#line 1458 "project9.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 84 "project9.y" /* yacc.c:1646  */
+#line 80 "project9.y" /* yacc.c:1646  */
     { (yyval.sl) = newsymlist((yyvsp[-2].s), (yyvsp[0].sl)); }
-#line 1465 "project9.tab.c" /* yacc.c:1646  */
+#line 1464 "project9.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1469 "project9.tab.c" /* yacc.c:1646  */
+#line 1468 "project9.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1693,5 +1692,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 86 "project9.y" /* yacc.c:1906  */
+#line 82 "project9.y" /* yacc.c:1906  */
 

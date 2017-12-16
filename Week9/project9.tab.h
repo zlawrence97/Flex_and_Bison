@@ -73,15 +73,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 9 "project9.y" /* yacc.c:1909  */
+#line 8 "project9.y" /* yacc.c:1909  */
 
-	struct ast *a;
-	double d;
-	struct symbol *s;
-	struct symlist *sl;
-	struct numlist *nl;
-	int fn;
-	char type_c;
+  struct ast *a;
+  double d;
+  struct symbol *s;
+  struct symlist *sl;
+  struct numlist *nl;
+  int fn;
+  char type_c;
 
 #line 87 "project9.tab.h" /* yacc.c:1909  */
 };
