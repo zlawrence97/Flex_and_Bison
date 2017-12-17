@@ -11,7 +11,7 @@ static unsigned symhash(char *sym)
 	unsigned int hash = 0;
 	unsigned c;
 
-	while(c = *sym++) hash = hash*9 ^ c;
+	while(c == *sym++) hash = hash*9 ^ c;
 
 	return hash;
 }
@@ -39,7 +39,7 @@ struct symbol * lookup(char *sym)
 struct ast * newast(int nodetype, struct ast *l, struct ast *r)
 {
 	struct ast *a = malloc(sizeof(struct ast));
- 
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -52,8 +52,8 @@ struct ast * newast(int nodetype, struct ast *l, struct ast *r)
 
 struct ast * newnum(double d)
 {
-	struct numval * a = malloc(sizeof(struct numval));
- 
+	struct numval *a = malloc(sizeof(struct numval));
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -80,7 +80,7 @@ struct ast * newcmp(int cmptype, struct ast *l, struct ast *r)
 struct ast * newprint(struct ast *l)
 {
 	struct printcall *a = malloc(sizeof(struct printcall));
- 
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -89,11 +89,11 @@ struct ast * newprint(struct ast *l)
 	a->l = l;
 	return (struct ast *)a;
 }
- 
+
 struct ast * newref(struct symbol *s)
 {
 	struct symref *a = malloc(sizeof(struct symref));
- 
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -130,7 +130,7 @@ struct ast * newasgnarr(struct symbol *s, struct ast *index, struct ast *v)
 	a->index = index;
 	a->v = v;
 	return (struct ast *)a;
-}
+}	
 
 struct ast * newasgn(struct symbol *s, struct ast *v)
 {
@@ -163,7 +163,7 @@ struct ast * newinitarr(struct symbol *s, struct numlist *nl)
 struct ast * newdecl(struct symlist *sl, char type)
 {
 	struct decl *a = malloc(sizeof(struct decl));
- 
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -173,11 +173,11 @@ struct ast * newdecl(struct symlist *sl, char type)
 	a->type = type;
 	return (struct ast *)a;
 }
- 
+
 struct ast * newdeclarr(struct symlist *sl, int begin, int end, char type)
 {
 	struct declarr *a = malloc(sizeof(struct declarr));
- 
+
 	if(!a) {
 		yyerror("out of space");
 		exit(0);
@@ -220,18 +220,18 @@ void treefree(struct ast *a)
 	case '1': case '2': case '3': case '4': case '5': case '6':
 	case 'L':
 		treefree(a->r);
- 
+
 	case '|':
 	case 'M': case 'P':
 		treefree(a->l);
 	
 	case 'K': case 'N': case 'U': case 'V': case 'T':
 		break;
- 
+
 	case '=':
 		free(((struct symasgn *)a)->v);
 		break;
- 
+
 	case 'I': case 'W':
 		free(((struct flow *)a)->cond);
 		if(((struct flow *)a)->tl) treefree(((struct flow *)a)->tl);
@@ -241,21 +241,21 @@ void treefree(struct ast *a)
 	case 'X': 
 		free(((struct decl *)a)->sl);
 		break;
- 
+
 	case 'Y':
 		free(((struct declarr *)a)->sl);
 		break;
- 
+
 	default: printf("internal error: free bad node %c\n", a->nodetype);
 	}
 	
 	free(a);
 }
- 
+
 struct symlist * newsymlist(struct symbol *sym, struct symlist *next)
 {
 	struct symlist *sl = malloc(sizeof(struct symlist));
- 
+
 	if(!sl) {
 		yyerror("out of space");
 		exit(0);
@@ -284,7 +284,7 @@ static double calldeclarr(struct declarr *);
 static double callrefarr(struct symrefarr *);
 static double callasgnarr(struct symasgnarr *);
 static double callinitarr(struct syminitarr *);
-  
+
 double eval(struct ast *a)
 {
 	double v;
@@ -293,34 +293,34 @@ double eval(struct ast *a)
 		yyerror("internal error, null eval");
 		return 0.0;
 	}
- 
+
 	switch(a->nodetype) {
 	
 	case 'K': v = ((struct numval *)a)->number; break;
- 
+
 	case 'N': if((((struct symref *)a)->s)->type != 'a' && (((struct symref *)a)->s)->type != 'b') 
 		{ printf("using undeclared ID: %s\n", (((struct symref *)a)->s)->name); } 
 		v = (((struct symref *)a)->s)->value; break;
- 
+
 	case '=': if((((struct symasgn *)a)->s)->type != 'a' && (((struct symasgn *)a)->s)->type != 'b')
 		{ printf("using undeclared ID: %s\n", (((struct symasgn *)a)->s)->name); } 
 		v = ((struct symasgn *)a)->s->value = 
 		eval(((struct symasgn *)a)->v); break;
- 
+
 	case '+': v = eval(a->l) + eval(a->r); break;
 	case '-': v = eval(a->l) - eval(a->r); break;
 	case '*': v = eval(a->l) * eval(a->r); break;
 	case '/': v = eval(a->l) / eval(a->r); break;
 	case '|': v = fabs(eval(a->l)); break;
 	case 'M': v = -eval(a->l); break;
- 
+
 	case '1': v = (eval(a->l) > eval(a->r))? 1 : 0; break;
 	case '2': v = (eval(a->l) < eval(a->r))? 1 : 0; break;
 	case '3': v = (eval(a->l) != eval(a->r))? 1 : 0; break;
 	case '4': v = (eval(a->l) == eval(a->r))? 1 : 0; break;
 	case '5': v = (eval(a->l) >= eval(a->r))? 1 : 0; break;
 	case '6': v = (eval(a->l) <= eval(a->r))? 1 : 0; break;
- 
+
 	case 'I':
 		if(eval(((struct flow *)a)->cond) != 0) {
 			if(((struct flow *)a)->tl) {
@@ -334,26 +334,32 @@ double eval(struct ast *a)
 				v = 0.0;
 		}
 		break;
- 
+
 	case 'W':
 		v = 0.0;
- 
+
 		if(((struct flow *)a)->tl) {
 			while(eval(((struct flow *)a)->cond) != 0)
 				v = eval(((struct flow *)a)->tl);
 		}
 		break;
- 
+
 	case 'L': eval(a->l); v = eval(a->r); break;
+
+	case 'P': v = callprint((struct printcall *)a); break;
+
+	case 'X': v = calldecl((struct decl *)a); break;
+
+	case 'Y': v = calldeclarr((struct declarr *)a); break;
 
 	case 'U': if((((struct symrefarr *)a)->s)->type != 'a' && (((struct symrefarr *)a)->s)->type != 'b')
 		{ printf("using undeclared ID: %s\n", (((struct symrefarr *)a)->s)->name); }
 		v = callrefarr((struct symrefarr *)a); break;
- 
+
 	case 'V': if((((struct symasgnarr *)a)->s)->type != 'a' && (((struct symasgnarr *)a)->s)->type != 'b')
 		{ printf("using undeclared ID: %s\n", (((struct symasgnarr *)a)->s)->name); }
 		v = callasgnarr((struct symasgnarr *)a); break;
- 
+
 	case 'T': if((((struct syminitarr *)a)->s)->type != 'a' && (((struct syminitarr *)a)->s)->type != 'b')
 		{ printf("using undeclared ID: %s\n", (((struct syminitarr *)a)->s)->name); }
 		v = callinitarr((struct syminitarr *)a); break;
@@ -484,8 +490,7 @@ void yyerror(char *s)
 	fprintf(stderr, "error: %s\n", s);
 }
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	extern FILE *yyin;
 	++argv; --argc;
